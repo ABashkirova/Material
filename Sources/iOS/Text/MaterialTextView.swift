@@ -25,64 +25,64 @@
 
 import UIKit
 
-@objc(TextViewDelegate)
-public protocol TextViewDelegate : UITextViewDelegate {
+@objc(MaterialTextViewDelegate)
+public protocol MaterialTextViewDelegate : UITextViewDelegate {
   /**
    A delegation method that is executed when the keyboard will open.
-   - Parameter textView: A TextView.
+   - Parameter textView: A MaterialTextView.
    - Parameter willShowKeyboard value: A NSValue.
    */
   @objc
-  optional func textView(textView: TextView, willShowKeyboard value: NSValue)
+  optional func textView(textView: MaterialTextView, willShowKeyboard value: NSValue)
   
   /**
    A delegation method that is executed when the keyboard will close.
-   - Parameter textView: A TextView.
+   - Parameter textView: A MaterialTextView.
    - Parameter willHideKeyboard value: A NSValue.
    */
   @objc
-  optional func textView(textView: TextView, willHideKeyboard value: NSValue)
+  optional func textView(textView: MaterialTextView, willHideKeyboard value: NSValue)
   
   /**
    A delegation method that is executed when the keyboard did open.
-   - Parameter textView: A TextView.
+   - Parameter textView: A MaterialTextView.
    - Parameter didShowKeyboard value: A NSValue.
    */
   @objc
-  optional func textView(textView: TextView, didShowKeyboard value: NSValue)
+  optional func textView(textView: MaterialTextView, didShowKeyboard value: NSValue)
   
   /**
    A delegation method that is executed when the keyboard did close.
-   - Parameter textView: A TextView.
+   - Parameter textView: A MaterialTextView.
    - Parameter didHideKeyboard value: A NSValue.
    */
   @objc
-  optional func textView(textView: TextView, didHideKeyboard value: NSValue)
+  optional func textView(textView: MaterialTextView, didHideKeyboard value: NSValue)
   
   /**
    A delegation method that is executed when text will be
    processed during editing.
-   - Parameter textView: A TextView.
+   - Parameter textView: A MaterialTextView.
    - Parameter willProcessEditing textStorage: A TextStorage.
    - Parameter text: A String.
    - Parameter range: A NSRange.
    */
   @objc
-  optional func textView(textView: TextView, willProcessEditing textStorage: TextStorage, text: String, range: NSRange)
+  optional func textView(textView: MaterialTextView, willProcessEditing textStorage: TextStorage, text: String, range: NSRange)
   
   /**
    A delegation method that is executed when text has been
    processed after editing.
-   - Parameter textView: A TextView.
+   - Parameter textView: A MaterialTextView.
    - Parameter didProcessEditing textStorage: A TextStorage.
    - Parameter text: A String.
    - Parameter range: A NSRange.
    */
   @objc
-  optional func textView(textView: TextView, didProcessEditing textStorage: TextStorage, text: String, range: NSRange)
+  optional func textView(textView: MaterialTextView, didProcessEditing textStorage: TextStorage, text: String, range: NSRange)
 }
 
-open class TextView: UITextView, Themeable {
+open class MaterialTextView: UITextView, Themeable {
   /// A boolean indicating whether the text is empty.
   open var isEmpty: Bool {
     return 0 == text?.utf16.count
@@ -361,7 +361,7 @@ open class TextView: UITextView, Themeable {
   }
 }
 
-fileprivate extension TextView {
+fileprivate extension MaterialTextView {
   /// Prepares the Notification handlers.
   func prepareNotificationHandlers() {
     let defaultCenter = NotificationCenter.default
@@ -389,7 +389,7 @@ fileprivate extension TextView {
   }
 }
 
-fileprivate extension TextView {
+fileprivate extension MaterialTextView {
   /// Updates the placeholderLabel text color.
   func updatePlaceholderLabelColor() {
     guard isPlaceholderLabelEnabled else {
@@ -410,7 +410,7 @@ fileprivate extension TextView {
   }
 }
 
-fileprivate extension TextView {
+fileprivate extension MaterialTextView {
   /// Laysout the placeholder UILabel.
   func layoutPlaceholderLabel() {
     guard isPlaceholderLabelEnabled else {
@@ -429,7 +429,7 @@ fileprivate extension TextView {
   }
 }
 
-fileprivate extension TextView {
+fileprivate extension MaterialTextView {
   /**
    Handler for when the keyboard will open.
    - Parameter notification: A Notification.
@@ -444,7 +444,7 @@ fileprivate extension TextView {
       return
     }
     
-    (delegate as? TextViewDelegate)?.textView?(textView: self, willShowKeyboard: v)
+    (delegate as? MaterialTextViewDelegate)?.textView?(textView: self, willShowKeyboard: v)
   }
   
   /**
@@ -463,7 +463,7 @@ fileprivate extension TextView {
       return
     }
     
-    (delegate as? TextViewDelegate)?.textView?(textView: self, didShowKeyboard: v)
+    (delegate as? MaterialTextViewDelegate)?.textView?(textView: self, didShowKeyboard: v)
   }
   
   /**
@@ -480,7 +480,7 @@ fileprivate extension TextView {
       return
     }
     
-    (delegate as? TextViewDelegate)?.textView?(textView: self, willHideKeyboard: v)
+    (delegate as? MaterialTextViewDelegate)?.textView?(textView: self, willHideKeyboard: v)
   }
   
   /**
@@ -499,7 +499,7 @@ fileprivate extension TextView {
       return
     }
     
-    (delegate as? TextViewDelegate)?.textView?(textView: self, didHideKeyboard: v)
+    (delegate as? MaterialTextViewDelegate)?.textView?(textView: self, didHideKeyboard: v)
   }
   
   /// Notification handler for when text editing began.
@@ -522,10 +522,10 @@ fileprivate extension TextView {
   }
 }
 
-extension TextView: TextStorageDelegate {
+extension MaterialTextView: TextStorageDelegate {
   @objc
   open func textStorage(textStorage: TextStorage, willProcessEditing text: String, range: NSRange) {
-    (delegate as? TextViewDelegate)?.textView?(textView: self, willProcessEditing: textStorage, text: string, range: range)
+    (delegate as? MaterialTextViewDelegate)?.textView?(textView: self, willProcessEditing: textStorage, text: string, range: range)
   }
   
   @objc
@@ -534,11 +534,11 @@ extension TextView: TextStorageDelegate {
       return
     }
     
-    (delegate as? TextViewDelegate)?.textView?(textView: self, didProcessEditing: textStorage, text: string, range: range)
+    (delegate as? MaterialTextViewDelegate)?.textView?(textView: self, didProcessEditing: textStorage, text: string, range: range)
   }
 }
 
-private extension TextView {
+private extension MaterialTextView {
   /// issue-838 and pr-1117
   ///
   /// Inserting (typing or pasting) an emoji character or placing cursor after some

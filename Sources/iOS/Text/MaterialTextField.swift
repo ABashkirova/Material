@@ -25,40 +25,40 @@
 
 import UIKit
 
-@objc(TextFieldPlaceholderAnimation)
-public enum TextFieldPlaceholderAnimation: Int {
+@objc(MaterialTextFieldPlaceholderAnimation)
+public enum MaterialTextFieldPlaceholderAnimation: Int {
   case `default`
   case hidden
 }
 
-@objc(TextFieldDelegate)
-public protocol TextFieldDelegate: UITextFieldDelegate {
+@objc(MaterialTextFieldDelegate)
+public protocol MaterialTextFieldDelegate: UITextFieldDelegate {
   /**
    A delegation method that is executed when the textField changed.
-   - Parameter textField: A TextField.
+   - Parameter textField: A MaterialTextField.
    - Parameter didChange text: An optional String.
    */
   @objc
-  optional func textField(textField: TextField, didChange text: String?)
+  optional func textField(textField: MaterialTextField, didChange text: String?)
   
   /**
    A delegation method that is executed when the textField will clear.
-   - Parameter textField: A TextField.
+   - Parameter textField: A MaterialTextField.
    - Parameter willClear text: An optional String.
    */
   @objc
-  optional func textField(textField: TextField, willClear text: String?)
+  optional func textField(textField: MaterialTextField, willClear text: String?)
   
   /**
    A delegation method that is executed when the textField is cleared.
-   - Parameter textField: A TextField.
+   - Parameter textField: A MaterialTextField.
    - Parameter didClear text: An optional String.
    */
   @objc
-  optional func textField(textField: TextField, didClear text: String?)
+  optional func textField(textField: MaterialTextField, didClear text: String?)
 }
 
-open class TextField: UITextField, Themeable {
+open class MaterialTextField: UITextField, Themeable {
   
   /// Minimum TextField text height.
   private let minimumTextHeight: CGFloat = 32
@@ -74,7 +74,7 @@ open class TextField: UITextField, Themeable {
   open var isPlaceholderAnimated = true
   
   /// Set the placeholder animation value.
-  open var placeholderAnimation = TextFieldPlaceholderAnimation.default {
+  open var placeholderAnimation = MaterialTextFieldPlaceholderAnimation.default {
     didSet {
       updatePlaceholderVisibility()
     }
@@ -481,7 +481,7 @@ open class TextField: UITextField, Themeable {
   }
 }
 
-fileprivate extension TextField {
+fileprivate extension MaterialTextField {
   /// Prepares the divider.
   func prepareDivider() {
     dividerColor = dividerNormalColor
@@ -530,7 +530,7 @@ fileprivate extension TextField {
   }
 }
 
-fileprivate extension TextField {
+fileprivate extension MaterialTextField {
   /// Updates the leftView tint color.
   func updateLeftViewColor() {
     leftView?.tintColor = isEditing ? leftViewActiveColor : leftViewNormalColor
@@ -593,7 +593,7 @@ fileprivate extension TextField {
   }
 }
 
-fileprivate extension TextField {
+fileprivate extension MaterialTextField {
   /// Layout the placeholderLabel.
   func layoutPlaceholderLabel() {
     let leftPadding = leftViewWidth + textInsets.left
@@ -645,7 +645,7 @@ fileprivate extension TextField {
   }
 }
 
-internal extension TextField {
+internal extension MaterialTextField {
   /// Layout given label at the bottom with the vertical offset provided.
   func layoutBottomLabel(label: UILabel, verticalOffset: CGFloat) {
     let c = dividerContentEdgeInsets
@@ -656,7 +656,7 @@ internal extension TextField {
   }
 }
 
-fileprivate extension TextField {
+fileprivate extension MaterialTextField {
   /// Handles the text editing did begin state.
   @objc
   func handleEditingDidBegin() {
@@ -668,7 +668,7 @@ fileprivate extension TextField {
   // Live updates the textField text.
   @objc
   func handleEditingChanged(textField: UITextField) {
-    (delegate as? TextFieldDelegate)?.textField?(textField: self, didChange: textField.text)
+    (delegate as? MaterialTextFieldDelegate)?.textField?(textField: self, didChange: textField.text)
   }
   
   /// Handles the text editing did end state.
@@ -688,11 +688,11 @@ fileprivate extension TextField {
     
     let t = text
     
-    (delegate as? TextFieldDelegate)?.textField?(textField: self, willClear: t)
+    (delegate as? MaterialTextFieldDelegate)?.textField?(textField: self, willClear: t)
     
     text = nil
     
-    (delegate as? TextFieldDelegate)?.textField?(textField: self, didClear: t)
+    (delegate as? MaterialTextFieldDelegate)?.textField?(textField: self, didClear: t)
   }
   
   /// Handles the visibilityIconButton TouchUpInside event.
@@ -712,7 +712,7 @@ fileprivate extension TextField {
   }
 }
 
-private extension TextField {
+private extension MaterialTextField {
   /// The animation for leftView when editing begins.
   func leftViewEditingBeginAnimation() {
     updateLeftViewColor()
@@ -762,7 +762,7 @@ private extension TextField {
   }
 }
 
-private extension TextField {
+private extension MaterialTextField {
   /// Updates visibilityIconButton image based on isSecureTextEntry value.
   func updateVisibilityIcon() {
     visibilityIconButton?.image = isSecureTextEntry ? visibilityIconOff : visibilityIconOn
