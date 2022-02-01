@@ -32,7 +32,7 @@ public enum EditorPlaceholderAnimation {
 
 open class Editor: View, Themeable {
   /// Reference to textView.
-  public let textView = TextView()
+  public let textView = MaterialTextView()
   
   /// A boolean indicating whether the textView is in edit mode.
   open var isEditing: Bool {
